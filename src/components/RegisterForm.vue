@@ -2,11 +2,11 @@
     <div class="register-container">
         <form @submit.prevent="handleSubmit">
             <label for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="Nome">
+            <input type="text" name="name" id="name" placeholder="Nome" v-model="name">
             <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="Email">
+            <input type="email" name="email" id="email" placeholder="Email" v-model="email">
             <label for="password">Password</label>
-            <input type="password" name="password" id="password" placeholder="Senha">
+            <input type="password" name="password" id="password" placeholder="Senha" v-model="password">
             <button type="submit">Cadastrar</button>
         </form>
         <h1>Or go to the <router-link to="/login">login page</router-link></h1>
@@ -19,18 +19,23 @@ export default {
             name: '',
             email: '',
             password: '',
-            address: ''
         }
     },
     methods: {
         handleSubmit() {
-            // Obtenha os valores dos campos de entrada
-            const name = this.$refs.name.value
-            const email = this.$refs.email.value
-            const password = this.$refs.password.value
-            const address = this.$refs.address.value
-
-            console.log(name, email, password, address)
+            this.$store.dispatch('generateUniqueId')
+            const newUser = {
+                name: 'Pedro Lucas',
+                email: 'victor@aaa.com',
+                password: 'kasodkaowei',
+                userId: this.generatedUniqueId
+            }
+            this.$store.dispatch('users/postUser', newUser)
+        }
+    },
+    computed: {
+        generatedUniqueId() {
+            return this.$store.getters['uniqueId']
         }
     }
 }

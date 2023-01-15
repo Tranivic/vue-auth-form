@@ -12,17 +12,61 @@
 </template>
 <script>
 export default {
-data() {
-    return {
-        email: '',
-        password: ''
-    }
-},
-methods: {
-    submitForm() {
-        
-    }
-},
+    data() {
+        return {
+            email: '',
+            password: '',
+        }
+    },
+    methods: {
+        submitForm() {
+            if(this.checkFormValidity.isValid) {
+                const user = {
+                    email: this.email,
+                    password: this.password,
+                }
+                console.log(user)
+            } else {
+                alert(this.checkFormValidity.errorMsg)
+            }
+
+        },
+    },
+    computed: {
+        checkFormValidity() {
+            if(this.email === '') {
+                return {
+                    errorMsg: 'Email is required',
+                    isValid: false,
+                }
+            }
+            if(this.password === '') {
+                return {
+                    errorMsg: 'Password is required',
+                    isValid: false,
+                }
+            }
+            if(this.password.length < 6) {
+                return {
+                    errorMsg: 'Password must have at least 6 characters',
+                    isValid: false,
+                }
+            }
+            if(this.email.includes('@') === false) {
+                return{
+                    errorMsg: 'Email must have a @',
+                    isValid: false,
+                }
+            }
+            if(this.email.includes('.') === false) {
+                return{
+                    errorMsg: 'Email must have a .',
+                    isValid: false,
+                }
+            }
+            return true
+        }
+    },
 }
 </script>
 <style scoped>

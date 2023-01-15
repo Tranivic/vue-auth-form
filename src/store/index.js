@@ -4,11 +4,25 @@ import usersModule from './users/users.js';
 const store = createStore({
     modules: {
         users: usersModule,
+        uniqueId: "",
     },
     state: {},
-    getters: {},
-    mutations: {},
-    actions: {}
+    getters: {
+        uniqueId(state) {
+            return state.uniqueId;
+        },
+    },
+    mutations: {
+        setUniqueId(state, uniqueId) {
+            state.uniqueId = uniqueId;
+        }
+    },
+    actions: {
+        generateUniqueId(context) {
+            const uniqueId = Math.random().toString(36).substr(2, 9);
+            context.commit('setUniqueId', uniqueId);
+        },
+    }
 });
 
 export default store;
