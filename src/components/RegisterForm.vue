@@ -1,45 +1,54 @@
 <template>
-    <div class="register-container">
-        <form @submit.prevent="handleSubmit">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="Nome" v-model="name">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="Email" v-model="email">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" placeholder="Senha" v-model="password">
-            <button type="submit">Cadastrar</button>
-        </form>
-        <h1>Or go to the <router-link to="/login">login page</router-link></h1>
-    </div>
+<div class="register-container">
+    <form v-if="!this.isLoading" @submit.prevent="handleSubmit">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="Nome" v-model.trim="name">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Email" v-model.trim="email">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Senha" v-model.trim="password">
+        <button type="submit">Sing up</button>
+        <h1>Already has a account? Go the <router-link to="/login">login</router-link> page.</h1>
+    </form>
+    <loading-spinner v-if="this.isLoading"></loading-spinner>
+</div>
 </template>
+
 <script>
+import LoadingSpinner from './ui/LoadingSpinner.vue'
 export default {
+    components: {
+        LoadingSpinner,
+    },
     data() {
         return {
             name: '',
             email: '',
             password: '',
+            isLoading: false,
+            error: null,
         }
     },
     methods: {
-        handleSubmit() {
-            this.$store.dispatch('generateUniqueId')
-            const newUser = {
-                name: 'Pedro Lucas',
-                email: 'victor@aaa.com',
-                password: 'kasodkaowei',
-                userId: this.generatedUniqueId
+        async handleSubmit() {
+            this.isLoading = true;
+            try {
+                const newUser = {
+                    name: this.name,
+                    email: this.email,
+                    password: this.password,
+                }
+                await this.$store.dispatch('auth/singUp', newUser);
+                
+            } catch (err) {
+                this.error = err.message || 'Something went wrong';
             }
-            this.$store.dispatch('users/postUser', newUser)
+            this.isLoading = false;
         }
     },
-    computed: {
-        generatedUniqueId() {
-            return this.$store.getters['uniqueId']
-        }
-    }
 }
 </script>
+
 <style>
 /* Style for register container */
 .register-container {

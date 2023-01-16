@@ -1,74 +1,55 @@
 <template>
-    <div class="login-container">
-        <form @submit.prevent="submitForm">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="Email">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" placeholder="Password">
-            <button type="submit">Login</button>
-        </form>
-        <h1>First time in the app? Go to the <router-link to="/register">register</router-link> page</h1>
-    </div>
+<div class="login-container">
+    <form @submit.prevent="submitForm">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Email" v-model.trim="email">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Password" v-model.trim="password">
+        <p v-if="!this.formValidity.isValid" class="error-message">{{ this.formValidity.errorMessage}}</p>
+        <button type="submit">Login</button>
+        <h1>First time in the app? Go to the <router-link to="/register">sing-up</router-link> page</h1>
+    </form>
+</div>
 </template>
+
 <script>
 export default {
     data() {
         return {
             email: '',
             password: '',
+
+            formValidity: {
+                isValid: false,
+                errorMessage: '',
+            },
         }
     },
     methods: {
         submitForm() {
-            if(this.checkFormValidity.isValid) {
-                const user = {
+            this.checkFormValidity()
+            if (this.formValidity.isValid) {
+                const loginData = {
                     email: this.email,
                     password: this.password,
                 }
-                console.log(user)
-            } else {
-                alert(this.checkFormValidity.errorMsg)
+                console.log(loginData)
             }
-
+        },
+        checkFormValidity() {
+            if (this.email.length <= 0 && this.password.length <= 0) {
+                this.formValidity.isValid = false
+                this.formValidity.errorMessage = 'Email and password are required'
+                return
+            }
+            this.formValidity.isValid = true
+            this.formValidity.errorMessage = '';
         },
     },
-    computed: {
-        checkFormValidity() {
-            if(this.email === '') {
-                return {
-                    errorMsg: 'Email is required',
-                    isValid: false,
-                }
-            }
-            if(this.password === '') {
-                return {
-                    errorMsg: 'Password is required',
-                    isValid: false,
-                }
-            }
-            if(this.password.length < 6) {
-                return {
-                    errorMsg: 'Password must have at least 6 characters',
-                    isValid: false,
-                }
-            }
-            if(this.email.includes('@') === false) {
-                return{
-                    errorMsg: 'Email must have a @',
-                    isValid: false,
-                }
-            }
-            if(this.email.includes('.') === false) {
-                return{
-                    errorMsg: 'Email must have a .',
-                    isValid: false,
-                }
-            }
-            return true
-        }
-    },
+    computed: {},
 }
 </script>
+
 <style scoped>
 /* Style for login container */
 .login-container {
@@ -115,5 +96,11 @@ export default {
 /* Style for hover effect on login button */
 .login-container button[type="submit"]:hover {
     background-color: #3e8e41;
+}
+
+.error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 </style>
