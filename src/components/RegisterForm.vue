@@ -39,9 +39,10 @@ export default {
                     password: this.password,
                 }
                 await this.$store.dispatch('auth/singUp', newUser);
-                
+                this.$router.push('/login');
             } catch (err) {
-                this.error = err.message || 'Something went wrong';
+                this.error = err.message;
+                alert(this.error);
             }
             this.isLoading = false;
         }

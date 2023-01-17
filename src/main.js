@@ -5,7 +5,7 @@ import store from './store'
 import LoadingSpinner from './components/ui/LoadingSpinner.vue'
 
 const app = createApp(App)
-app.component(LoadingSpinner)
+app.component('loading-spinner', LoadingSpinner)
 
 app.use(router)
 app.use(store)

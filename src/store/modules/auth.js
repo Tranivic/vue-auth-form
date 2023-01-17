@@ -15,7 +15,34 @@ export default {
     },
   },
   actions: {
-    async singUp(context, payload) {
+    teste(context) {
+      console.log(context)
+    },
+    async login({ commit }, payload) {
+      const response = await fetch(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBDNr22n_oyIauuFGR-JyJpKyOl_1eBrTE',
+        {
+          method: 'POST',
+          body: JSON.stringify({
+            email: payload.email,
+            password: payload.password,
+            returnSecureToken: true,
+          }),
+        }
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        console.log(responseData.error.message)
+        const error = new Error(responseData.error.message || 'Failed to login, try again later.');
+        throw error;
+      }
+      commit('setUser', {
+        userId: responseData.localId,
+        token: responseData.idToken,
+        tokenExpiration: responseData.expiresIn,
+      });
+    },
+    async singUp({commit, dispatch}, payload) {
       const response = await fetch(
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBDNr22n_oyIauuFGR-JyJpKyOl_1eBrTE',
         {
@@ -28,17 +55,21 @@ export default {
         }
       );
       const responseData = await response.json();
-
       if (!response.ok) {
-        console.warn(responseData);
-        const error = new Error(responseData.message || 'Failed to fetch!');
+        console.log(responseData.error.message)
+        const error = new Error(responseData.error.message || 'Failed to sing up, try again later.');
         throw error;
       }
-      context.commit('setUser', {
+      commit('setUser', {
         userId: responseData.localId,
         token: responseData.idToken,
         tokenExpiration: responseData.expiresIn,
       });
+      dispatch('registerUserInDatabase', {
+        userId: responseData.localId,
+        email: payload.email,
+        name: payload.name,
+      }, { root: true });
     },
   },
 };

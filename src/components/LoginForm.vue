@@ -1,11 +1,12 @@
 <template>
 <div class="login-container">
+    <loading-spinner v-if="this.isLoading"></loading-spinner>
     <form @submit.prevent="submitForm">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" placeholder="Email" v-model.trim="email">
         <label for="password">Password</label>
         <input type="password" name="password" id="password" placeholder="Password" v-model.trim="password">
-        <p v-if="!this.formValidity.isValid" class="error-message">{{ this.formValidity.errorMessage}}</p>
+        <p v-if="!this.formValidity.isValid" class="error-message">{{ this.formValidity.errorMessage }}</p>
         <button type="submit">Login</button>
         <h1>First time in the app? Go to the <router-link to="/register">sing-up</router-link> page</h1>
     </form>
@@ -18,7 +19,7 @@ export default {
         return {
             email: '',
             password: '',
-
+            isLoading: false,
             formValidity: {
                 isValid: false,
                 errorMessage: '',
@@ -26,15 +27,22 @@ export default {
         }
     },
     methods: {
-        submitForm() {
-            this.checkFormValidity()
-            if (this.formValidity.isValid) {
-                const loginData = {
-                    email: this.email,
-                    password: this.password,
+        async submitForm() {
+            this.isLoading = true
+            this.$store.dispatch('auth/teste')
+            try {
+                this.checkFormValidity()
+                if (this.formValidity.isValid) {
+                    const loginData = {
+                        email: this.email,
+                        password: this.password,
+                    }
+                    await this.$store.dispatch('auth/login', loginData)
                 }
-                console.log(loginData)
+            } catch (err) {
+                alert(err.message)
             }
+            this.isLoading = false
         },
         checkFormValidity() {
             if (this.email.length <= 0 && this.password.length <= 0) {
