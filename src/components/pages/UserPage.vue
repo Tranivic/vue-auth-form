@@ -5,14 +5,13 @@
 </template>
 <script>
 export default {
-    props: ['userId'],
-    data() {
-        return {
-            key: "value"
-        }
-    },
+data() {
+    return {
+        key: "value"
+    }
+},
 }   
 </script>
 <style scoped>
-
+    
 </style>

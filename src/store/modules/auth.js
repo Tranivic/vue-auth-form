@@ -5,7 +5,11 @@ export default {
     token: null,
     tokenExpiration: null,
   },
-  getters: {},
+  getters: {
+    token(state) {
+      console.log(state.token);
+    },
+  },
   mutations: {
     setUser(state, payload) {
       state.userId = payload.userId;
@@ -15,10 +19,7 @@ export default {
     },
   },
   actions: {
-    teste(context) {
-      console.log(context)
-    },
-    async login({ commit }, payload) {
+    async login(context, payload) {
       const response = await fetch(
         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBDNr22n_oyIauuFGR-JyJpKyOl_1eBrTE',
         {
@@ -32,17 +33,17 @@ export default {
       );
       const responseData = await response.json();
       if (!response.ok) {
-        console.log(responseData.error.message)
-        const error = new Error(responseData.error.message || 'Failed to login, try again later.');
+        const errorMessage = responseData.error.message;
+        const error = new Error(errorMessage || 'Failed to login!');
         throw error;
       }
-      commit('setUser', {
+      context.commit('setUser', {
         userId: responseData.localId,
         token: responseData.idToken,
         tokenExpiration: responseData.expiresIn,
       });
     },
-    async singUp({commit, dispatch}, payload) {
+    async singUp(context, payload) {
       const response = await fetch(
         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBDNr22n_oyIauuFGR-JyJpKyOl_1eBrTE',
         {
@@ -55,21 +56,17 @@ export default {
         }
       );
       const responseData = await response.json();
+
       if (!response.ok) {
-        console.log(responseData.error.message)
-        const error = new Error(responseData.error.message || 'Failed to sing up, try again later.');
+        const errorMessage = responseData.error.message;
+        const error = new Error(errorMessage || 'Failed to singup!');
         throw error;
       }
-      commit('setUser', {
+      context.commit('setUser', {
         userId: responseData.localId,
         token: responseData.idToken,
         tokenExpiration: responseData.expiresIn,
       });
-      dispatch('registerUserInDatabase', {
-        userId: responseData.localId,
-        email: payload.email,
-        name: payload.name,
-      }, { root: true });
     },
   },
 };
