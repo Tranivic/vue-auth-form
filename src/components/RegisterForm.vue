@@ -39,11 +39,12 @@ export default {
                     password: this.password,
                 } 
                 await this.$store.dispatch('auth/singUp', newUser);
-                await this.$store.dispatch('user/postUser', {
+                await this.$store.dispatch('user/saveUserData', {
                     name: newUser.name,
                     email: newUser.email,
                     id: this.getUserId,
                 });
+                this.$router.push(`/user/${this.getUserId}`);
             } catch (err) {
                 this.error = err.message || 'Something went wrong';
             }
@@ -52,7 +53,7 @@ export default {
     },
     computed: {
         getUserId() {
-            return this.$store.getters['auth/userId']; 
+            return this.$store.getters['auth/id']; 
         }
     },
 }

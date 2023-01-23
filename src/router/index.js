@@ -10,13 +10,13 @@ const routes = createRouter({
     routes: [
         {path: '/login', component: LoginForm, alias: '/' },
         {path: '/register', component: RegisterForm, },
-        {path: '/user/:userId', component: UserPage, props: true, beforeEnter(to, from, next) {
-            if (store.state.auth.userId === to.params.userId) {
+        {path: '/user/:userId', component: UserPage, props: true, beforeEnter: (to, from, next) => {
+            if (to.params.userId === store.state.auth.id) {
                 next();
             } else {
-                next({name: 'NotFound', params: {notFound: 'user'}});
+                next('/login');
             }
-        } },
+        }},
         {path: '/:notFound(.*)', component: NotFoundPage, name: 'NotFound' }
     ],
 });

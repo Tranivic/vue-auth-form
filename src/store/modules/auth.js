@@ -1,7 +1,7 @@
 export default {
   namespaced: true,
   state: {
-    userId: null,
+    id: null,
     token: null,
     tokenExpiration: null,
   },
@@ -9,16 +9,17 @@ export default {
     token(state) {
       return state.token;
     },
-    userId(state){
-      return state.userId;
-    }
+    id(state) {
+      return state.id;
+    },
   },
   mutations: {
     setUser(state, payload) {
-      state.userId = payload.userId;
+      state.id = payload.id;
       state.token = payload.token;
       state.tokenExpiration = payload.tokenExpiration;
-      console.log(state);
+      console.log("Setei o token")
+      console.log(state)
     },
   },
   actions: {
@@ -41,7 +42,7 @@ export default {
         throw error;
       }
       context.commit('setUser', {
-        userId: responseData.localId,
+        id: responseData.localId,
         token: responseData.idToken,
         tokenExpiration: responseData.expiresIn,
       });
@@ -66,7 +67,7 @@ export default {
         throw error;
       }
       context.commit('setUser', {
-        userId: responseData.localId,
+        id: responseData.localId,
         token: responseData.idToken,
         tokenExpiration: responseData.expiresIn,
       });

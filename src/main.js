@@ -1,3 +1,7 @@
+// Global css imported
+import '../public/reset.css'
+
+// Other imports
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'

@@ -1,6 +1,6 @@
 <template>
 <div class="login-container">
-    <form @submit.prevent="submitForm" v-if="!isLoading">
+    <form @submit.prevent="submitForm">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" placeholder="Email" v-model.trim="email" />
         <label for="password">Password</label>
@@ -14,14 +14,11 @@
             <router-link to="/register">sing-up</router-link> page
         </h1>
     </form>
-    <loading-spinner v-else></loading-spinner>
 </div>
 </template>
 
 <script>
-import LoadingSpinner from './ui/LoadingSpinner.vue';
 export default {
-  components: { LoadingSpinner },
     data() {
         return {
             email: '',
@@ -31,12 +28,10 @@ export default {
                 isValid: false,
                 errorMessage: '',
             },
-            isLoading: false,
         };
     },
     methods: {
         async submitForm() {
-            this.isLoading = true;
             try {
                 this.checkFormValidity();
                 if (this.formValidity.isValid) {
@@ -45,16 +40,14 @@ export default {
                         password: this.password,
                     };
                     await this.$store.dispatch('auth/login', loginData);
-                    this.$router.push(`/user/${this.$store.state.auth.userId}`);
+                    this.$router.push(`/user/${this.getUserId}`);
                 }
             } catch (err) {
                 console.log(err)
                 this.formValidity.isValid = false;
                 this.formValidity.errorMessage = err || 'Something went wrong';
             }
-            this.isLoading = false;
         },
-
         checkFormValidity() {
             if (this.email.length <= 0 || this.password.length <= 0) {
                 this.formValidity.isValid = false;
@@ -65,7 +58,14 @@ export default {
             this.formValidity.errorMessage = '';
         },
     },
-    computed: {},
+    computed: {
+        getUserId() {
+            return this.$store.getters['auth/id'];
+        },
+        getUserToken(){
+            return this.$store.getters['auth/token'];
+        }
+    },
 };
 </script>
 

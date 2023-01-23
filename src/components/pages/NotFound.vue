@@ -1,8 +1,7 @@
 <template>
-    <div class="not-foud-container">
+    <div class="not-found-container">
         <h1>404</h1>
-        <h1> || </h1>
-        <h1>This page was not foud!</h1>
+        <h1>Page not found</h1>
     </div>
 </template>
 <script>
@@ -11,11 +10,10 @@ export default {
 }
 </script>
 <style scoped>
-    .not-foud-container {
+    .not-found-container {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding-top: 10rem;
     }
     h1{
         font-size: 2rem;

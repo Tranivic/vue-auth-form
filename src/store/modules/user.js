@@ -1,20 +1,60 @@
 export default {
-    namespaced: true,
-    state: {
-        logedUser: null,
+  namespaced: true,
+  state: {
+    logedUser: {},
+  },
+  getters: {
+    logedUser(state) {
+      return state.logedUser;
     },
-    getters: {
-        
+  },
+  mutations: {
+    setLogedUser(state, payload) {
+      state.logedUser = payload;
+      console.log("Setei o logedUser")
+      console.log(state.logedUser)
     },
-    mutations: {
-        teste(_, payload) {
-            console.log(payload)
+  },
+  actions: {
+    async saveUserData({ commit }, payload) {
+      const response = await fetch(
+        `https://vue-auth-form-default-rtdb.firebaseio.com/users/${payload.id}.json`,
+        {
+          method: 'PUT',
+          body: JSON.stringify({
+            name: payload.name,
+            email: payload.email,
+          }),
         }
-     
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        const error = new Error(
+          responseData.message || 'Failed to save user data'
+        );
+        throw error;
+      }
+      commit('setLogedUser', {
+        name: payload.name,
+        email: payload.email,
+      });
     },
-    actions: {
-        postUserData(){
-            // To do...
+
+    async getUserData({commit},payload) {
+      const response = await fetch(
+        `https://vue-auth-form-default-rtdb.firebaseio.com/users/${payload.userId}.json?auth=${payload.userToken}`,
+        {
+          method: 'GET',
         }
-    }
+      );
+      const responseData = await response.json();
+      if (!response.ok) {
+        const error = new Error(
+          responseData.message || 'Failed to fetch user data'
+        );
+        throw error;
+      }
+      commit('setLogedUser',responseData);
+    },
+  },
 };
