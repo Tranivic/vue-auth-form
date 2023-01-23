@@ -7,8 +7,11 @@ export default {
   },
   getters: {
     token(state) {
-      console.log(state.token);
+      return state.token;
     },
+    userId(state){
+      return state.userId;
+    }
   },
   mutations: {
     setUser(state, payload) {
