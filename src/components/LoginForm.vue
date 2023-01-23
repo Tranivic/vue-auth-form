@@ -23,7 +23,6 @@ export default {
         return {
             email: '',
             password: '',
-
             formValidity: {
                 isValid: false,
                 errorMessage: '',
@@ -32,8 +31,8 @@ export default {
     },
     methods: {
         async submitForm() {
-            try {
-                this.checkFormValidity();
+            this.checkFormValidity();
+            try {     
                 if (this.formValidity.isValid) {
                     const loginData = {
                         email: this.email,
@@ -48,10 +47,14 @@ export default {
                 this.formValidity.errorMessage = err || 'Something went wrong';
             }
         },
+
         checkFormValidity() {
             if (this.email.length <= 0 || this.password.length <= 0) {
-                this.formValidity.isValid = false;
                 this.formValidity.errorMessage = 'Email and password are required';
+                return;
+            }
+            if (this.password.length < 6) {
+                this.formValidity.errorMessage = 'Password must be at least 6 characters';
                 return;
             }
             this.formValidity.isValid = true;

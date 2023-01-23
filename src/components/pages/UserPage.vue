@@ -19,7 +19,7 @@ export default {
     };
   },
   created() {
-    if (!this.getLogedUser) {
+    if (this.getLogedUser === null) {
       this.loadUserData();
       return;
     }
