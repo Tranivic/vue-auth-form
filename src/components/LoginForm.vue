@@ -24,7 +24,7 @@ export default {
             email: '',
             password: '',
             formValidity: {
-                isValid: false,
+                isValid: true,
                 errorMessage: '',
             },
         };
@@ -50,10 +50,12 @@ export default {
 
         checkFormValidity() {
             if (this.email.length <= 0 || this.password.length <= 0) {
+                this.formValidity.isValid = false;
                 this.formValidity.errorMessage = 'Email and password are required';
                 return;
             }
             if (this.password.length < 6) {
+                this.formValidity.isValid = false;
                 this.formValidity.errorMessage = 'Password must be at least 6 characters';
                 return;
             }
