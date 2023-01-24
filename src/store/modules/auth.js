@@ -14,12 +14,10 @@ export default {
     },
   },
   mutations: {
-    setUser(state, payload) {
+    setUserState(state, payload) {
       state.id = payload.id;
       state.token = payload.token;
       state.tokenExpiration = payload.tokenExpiration;
-      console.log("Setei o token")
-      console.log(state)
     },
   },
   actions: {
@@ -41,7 +39,7 @@ export default {
         const error = new Error(errorMessage || 'Failed to login!');
         throw error;
       }
-      context.commit('setUser', {
+      context.commit('setUserState', {
         id: responseData.localId,
         token: responseData.idToken,
         tokenExpiration: responseData.expiresIn,
@@ -66,10 +64,17 @@ export default {
         const error = new Error(errorMessage || 'Failed to singup!');
         throw error;
       }
-      context.commit('setUser', {
+      context.commit('setUserState', {
         id: responseData.localId,
         token: responseData.idToken,
         tokenExpiration: responseData.expiresIn,
+      });
+    },
+    logout(context) {
+      context.commit('setUserState', {
+        id: null,
+        token: null,
+        tokenExpiration: null,
       });
     },
   },

@@ -11,11 +11,12 @@ export default {
   mutations: {
     setLogedUser(state, payload) {
       state.logedUser = payload;
-      console.log("Setei o logedUser")
-      console.log(state.logedUser)
     },
   },
   actions: {
+    clearLogedUser({ commit }) {
+      commit('setLogedUser', '');
+    },
     async saveUserData({ commit }, payload) {
       const response = await fetch(
         `https://vue-auth-form-default-rtdb.firebaseio.com/users/${payload.id}.json`,
