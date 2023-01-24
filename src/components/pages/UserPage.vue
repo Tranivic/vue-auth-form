@@ -31,7 +31,7 @@ export default {
         logoutUser() {
             this.$store.dispatch('user/clearLogedUser');
             this.$store.dispatch('auth/logout');
-            this.$router.push('/login');
+            this.$router.replace('/login');
         },
         async loadUserData() {
             const userId = this.$store.getters['auth/id'];

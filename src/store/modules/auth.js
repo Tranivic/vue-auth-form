@@ -12,6 +12,9 @@ export default {
     id(state) {
       return state.id;
     },
+    isAuthenticated(state) {
+      return !!state.token;
+    },
   },
   mutations: {
     setUserState(state, payload) {
