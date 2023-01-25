@@ -39,7 +39,7 @@ export default {
                         password: this.password,
                     };
                     await this.$store.dispatch('auth/login', loginData);
-                    this.$router.replace(`/user/${this.getUserId}`);
+                    this.$router.push(`/user/${this.getUserId}`);
                 }
             } catch (err) {
                 console.log(err)

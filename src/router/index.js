@@ -12,27 +12,31 @@ const routes = createRouter({
       path: '/login',
       component: LoginForm,
       alias: '/',
-      meta: { requiresUnauth: true },
+      meta: { requiresUnAuth: true },
     },
     {
       path: '/register',
       component: RegisterForm,
-      meta: { requiresUnauth: true },
+      meta: { requiresUnAuth: true },
     },
     {
       path: '/user/:userId',
       component: UserPage,
       props: true,
-      meta: { requiresAuth: true },
+      meta: { requiresAuth: true, requireSameLoggedUser: true },
     },
     { path: '/:notFound(.*)', component: NotFoundPage, name: 'NotFound' },
   ],
 });
 
 routes.beforeEach((to, _, next) => {
+    store.dispatch('auth/checkAuth');
+    store.dispatch('auth/isTokenValid');
     if(to.meta.requiresAuth && !store.getters['auth/isAuthenticated']) {
         next('/login');
-    } else if(to.meta.requiresUnauth && store.getters['auth/isAuthenticated']) {
+    } else if(to.meta.requiresUnAuth && store.getters['auth/isAuthenticated']) {
+        next('/user/' + store.getters['auth/id']);
+    } else if(to.meta.requiresAuth && to.params.userId !== store.getters['auth/id']) {
         next('/user/' + store.getters['auth/id']);
     } else {
         next();

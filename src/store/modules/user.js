@@ -40,7 +40,6 @@ export default {
         email: payload.email,
       });
     },
-
     async getUserData({commit},payload) {
       const response = await fetch(
         `https://vue-auth-form-default-rtdb.firebaseio.com/users/${payload.userId}.json?auth=${payload.userToken}`,
