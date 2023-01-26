@@ -24,29 +24,37 @@ export default {
     },
   },
   actions: {
-    isTokenValid() {
-      const tokenExpiration = localStorage.getItem('tokenExpiration') * 100;
-      const tokenCreatedTime = localStorage.getItem('authTime');
-      const currentTime = new Date().getTime();
-      const tokenDuration = currentTime - tokenCreatedTime;
-      const tokenExpiresIn = tokenExpiration - tokenDuration
+    async isTokenValid() {
+      console.log('Checking token validity...')
+      if (localStorage.getItem('token')) {
+        const tokenExpiration = localStorage.getItem('tokenExpiration') * 100;
+        const tokenCreatedTime = localStorage.getItem('authTime');
+        const currentTime = new Date().getTime();
+        const tokenDuration = currentTime - tokenCreatedTime;
+        const tokenExpiresIn = tokenExpiration - tokenDuration;
 
-      console.log('Token expires in: '+ tokenExpiresIn+'ms');
-      if (tokenDuration > tokenExpiration) {
-        console.log('Token expired');
-        return false;
+        console.log('Token expires in: ' + parseInt(tokenExpiresIn / 1000) + 's');
+        if (tokenDuration > tokenExpiration) {
+          console.log('Token expired');
+          return false;
+        }
+        console.log('Token still valid');
+        return true;
       }
-      console.log('Token still valid');
-      return true;
+      console.log('No token found');
+      return false;
     },
-    checkAuth(context) {
-      if (localStorage.getItem('token') && context.dispatch('isTokenValid')) {
+    async checkAuth(context) {
+      const tokenStillValid =  await context.dispatch('isTokenValid');
+      if (tokenStillValid) {
         context.commit('setUserState', {
           id: localStorage.getItem('userId'),
           token: localStorage.getItem('token'),
           tokenExpiration: localStorage.getItem('tokenExpiration'),
         });
+        return;
       }
+      context.dispatch('logout');
     },
     async login(context, payload) {
       return context.dispatch('auth', {

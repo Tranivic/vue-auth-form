@@ -32,7 +32,7 @@ export default {
     methods: {
         async submitForm() {
             this.checkFormValidity();
-            try {     
+            try {
                 if (this.formValidity.isValid) {
                     const loginData = {
                         email: this.email,
@@ -44,7 +44,9 @@ export default {
             } catch (err) {
                 console.log(err)
                 this.formValidity.isValid = false;
-                this.formValidity.errorMessage = err || 'Something went wrong';
+                if (err.message === 'INVALID_PASSWORD' || err.message === 'EMAIL_NOT_FOUND') {
+                    this.formValidity.errorMessage = 'Invalid email or password';
+                }
             }
         },
 
@@ -67,7 +69,7 @@ export default {
         getUserId() {
             return this.$store.getters['auth/id'];
         },
-        getUserToken(){
+        getUserToken() {
             return this.$store.getters['auth/token'];
         }
     },

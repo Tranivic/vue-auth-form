@@ -29,9 +29,8 @@ const routes = createRouter({
   ],
 });
 
-routes.beforeEach((to, _, next) => {
-    store.dispatch('auth/checkAuth');
-    store.dispatch('auth/isTokenValid');
+routes.beforeEach(async (to, _, next) => {
+    await store.dispatch('auth/checkAuth');
     if(to.meta.requiresAuth && !store.getters['auth/isAuthenticated']) {
         next('/login');
     } else if(to.meta.requiresUnAuth && store.getters['auth/isAuthenticated']) {
