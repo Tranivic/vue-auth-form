@@ -1,24 +1,30 @@
 <template>
 <div class="login-container">
-    <form @submit.prevent="submitForm">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="Email" v-model.trim="email" />
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" placeholder="Password" v-model.trim="password" />
-        <p v-if="!this.formValidity.isValid" class="error-message">
-            {{ this.formValidity.errorMessage }}
-        </p>
-        <button type="submit">Login</button>
-        <h1>
-            First time in the app? Go to the
-            <router-link to="/register">sing-up</router-link> page
-        </h1>
-    </form>
+    <transition>
+        <form v-if="!isLoading" @submit.prevent="submitForm">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="Email" v-model.trim="email" />
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Password" v-model.trim="password" />
+            <p v-if="!this.formValidity.isValid" class="error-message">
+                {{ this.formValidity.errorMessage }}
+            </p>
+            <button type="submit">Login</button>
+            <h1>
+                First time in the app? Go to the
+                <router-link to="/register">sing-up</router-link> page
+            </h1>
+        </form>
+        <loading-spinner v-else></loading-spinner>
+    </transition>
 </div>
 </template>
 
 <script>
 export default {
+    mounted () {
+        this.isLoading = false;
+    },
     data() {
         return {
             email: '',
@@ -27,10 +33,12 @@ export default {
                 isValid: true,
                 errorMessage: '',
             },
+            isLoading: true,
         };
     },
     methods: {
         async submitForm() {
+            this.isLoading = true;
             this.checkFormValidity();
             try {
                 if (this.formValidity.isValid) {
@@ -46,8 +54,13 @@ export default {
                 this.formValidity.isValid = false;
                 if (err.message === 'INVALID_PASSWORD' || err.message === 'EMAIL_NOT_FOUND') {
                     this.formValidity.errorMessage = 'Invalid email or password';
+                    return
                 }
+                this.formValidity.errorMessage = 'Something went wrong, try again later';
             }
+            setTimeout(() => {
+                this.isLoading = false;
+            }, 10);
         },
 
         checkFormValidity() {
@@ -128,5 +141,17 @@ export default {
     color: red;
     font-weight: bold;
     margin-bottom: 20px;
+}
+/* Transition related */
+.v-enter-from{
+    opacity: 0;
+    transform: translateY(50px);
+}
+.v-enter-active{
+    transition: all 0.5s ease-in-out;
+}
+.v-enter-to{
+    opacity: 1;
+    transform: translateY(0);
 }
 </style>

@@ -22,6 +22,8 @@ main{
   display: flex;
   justify-content: center;
   background-color: #f5f5f5;
-  padding: 100px 0;
+}
+*{
+    font-family: 'Roboto', sans-serif;
 }
 </style>

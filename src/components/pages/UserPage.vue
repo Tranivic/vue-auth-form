@@ -1,7 +1,6 @@
 <template>
 <section>
-    <loading-spinner v-if="isLoading"></loading-spinner>
-    <div v-else>
+    <div v-if="!isLoading">
         <h1>Welcome, {{ getLogedUser.name }}. You are logged in!</h1>
         <button @click="logoutUser">Logout</button>
     </div>
@@ -9,11 +8,7 @@
 </template>
 
 <script>
-import LoadingSpinner from '../ui/LoadingSpinner.vue';
 export default {
-    components: {
-        LoadingSpinner,
-    },
     data() {
         return {
             isLoading: true,
@@ -66,7 +61,6 @@ section {
 
 h1 {
     font-size: 2rem;
-    font-family: 'Roboto', sans-serif;
     padding-bottom: 3rem;
 }
 

@@ -1,31 +1,32 @@
 <template>
 <div class="register-container">
-    <form v-if="!this.isLoading" @submit.prevent="handleSubmit">
-        <label for="name">Name</label>
-        <input type="text" name="name" id="name" placeholder="Nome" v-model.trim="name">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" placeholder="Email" v-model.trim="email">
-        <label for="password">Password</label>
-        <input type="password" name="password" id="password" placeholder="Senha" v-model.trim="password">
-        <button type="submit">Sing up</button>
-        <h1>Already has a account? Go the <router-link to="/login">login</router-link> page.</h1>
-    </form>
-    <loading-spinner v-if="this.isLoading"></loading-spinner>
+    <transition>
+        <form v-if="!this.isLoading" @submit.prevent="handleSubmit">
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name" placeholder="Nome" v-model.trim="name">
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" placeholder="Email" v-model.trim="email">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Senha" v-model.trim="password">
+            <button type="submit">Sing up</button>
+            <h1>Already has a account? Go the <router-link to="/login">login</router-link> page.</h1>
+        </form>
+        <loading-spinner v-else></loading-spinner>
+    </transition>
 </div>
 </template>
 
 <script>
-import LoadingSpinner from './ui/LoadingSpinner.vue'
 export default {
-    components: {
-        LoadingSpinner,
+    mounted () {
+        this.isLoading = false;
     },
     data() {
         return {
             name: '',
             email: '',
             password: '',
-            isLoading: false,
+            isLoading: true,
             error: null,
         }
     },
@@ -37,7 +38,7 @@ export default {
                     name: this.name,
                     email: this.email,
                     password: this.password,
-                } 
+                }
                 await this.$store.dispatch('auth/singUp', newUser);
                 await this.$store.dispatch('user/saveUserData', {
                     name: newUser.name,
@@ -53,7 +54,7 @@ export default {
     },
     computed: {
         getUserId() {
-            return this.$store.getters['auth/id']; 
+            return this.$store.getters['auth/id'];
         }
     },
 }
@@ -106,5 +107,16 @@ export default {
 /* Style for hover effect on register button */
 .register-container button[type="submit"]:hover {
     background-color: #3e8e41;
+}
+.v-enter-from {
+    opacity: 0;
+    transform: translateY(50px);
+}
+.v-enter-active {
+    transition: all 0.3s ease-out;
+}
+.v-enter-to{
+    opacity: 1;
+    transform: translateY(0);
 }
 </style>
