@@ -1,23 +1,31 @@
 <template>
-<section>
-    <div v-if="!isLoading">
-        <h1>Welcome, {{ getLogedUser.name }}. You are logged in!</h1>
+<section v-if="!isLoading">
+    <div class="user-info">
+        <h1>Welcome, {{ getLogedUser.name }}.</h1>
+    </div>
+    <user-goals></user-goals>
+    <div class="btn-container">
         <button @click="logoutUser">Logout</button>
     </div>
 </section>
 </template>
 
 <script>
+import UserGoals from '../UserGoals.vue';
 export default {
+    components: {
+        UserGoals,
+    },
     data() {
         return {
             isLoading: true,
         };
     },
-    created() {
+     async created() {
         this.isLoading = true;
         if (!this.getLogedUser) {
-            this.loadUserData();
+            await this.loadUserData();
+            this.isLoading = false;
             return;
         }
         this.isLoading = false;
@@ -53,8 +61,9 @@ export default {
 
 <style scoped>
 section {
-    width: 100%;
     display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     text-align: center;
 }
@@ -66,9 +75,7 @@ h1 {
 
 button {
     background-color: #ff0000;
-    /* red */
     color: #ffffff;
-    /* white */
     padding: 10px 15px;
     border-radius: 5px;
     border: none;
@@ -78,6 +85,5 @@ button {
 
 button:hover {
     background-color: #cc0000;
-    /* dark red */
 }
 </style>

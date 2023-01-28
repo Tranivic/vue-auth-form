@@ -54,8 +54,10 @@ export default {
                 this.formValidity.isValid = false;
                 if (err.message === 'INVALID_PASSWORD' || err.message === 'EMAIL_NOT_FOUND') {
                     this.formValidity.errorMessage = 'Invalid email or password';
+                    this.isLoading = false;
                     return
                 }
+                this.isLoading = false;
                 this.formValidity.errorMessage = 'Something went wrong, try again later';
             }
             setTimeout(() => {
