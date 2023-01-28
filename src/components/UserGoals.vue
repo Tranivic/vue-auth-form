@@ -21,12 +21,15 @@ export default {
     methods: {
         removeGoal(element) {
             let newGoalsList = this.goals.filter(goal => goal !== element);
-            console.log(newGoalsList);
             this.goals = newGoalsList;
         },
         addGoal() {
-            this.goals.unshift(this.newGoal);
-            this.newGoal = '';
+            if (this.newGoal === '' || this.goals.includes(this.newGoal)) {
+                alert('Goal already exists or is empty')
+                return;
+            }
+            this.goals.unshift(this.newGoal)
+            this.newGoal = ''
         },
     },
 }
@@ -37,6 +40,7 @@ li {
     background-color: #ccc;
     border: solid 1px #000;
     padding: .5rem;
+    width: 15rem;
 }
 
 .goals-form {

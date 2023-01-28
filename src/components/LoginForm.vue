@@ -1,6 +1,5 @@
 <template>
 <div class="login-container">
-    <transition>
         <form v-if="!isLoading" @submit.prevent="submitForm">
             <label for="email">Email</label>
             <input type="email" name="email" id="email" placeholder="Email" v-model.trim="email" />
@@ -16,7 +15,6 @@
             </h1>
         </form>
         <loading-spinner v-else></loading-spinner>
-    </transition>
 </div>
 </template>
 
@@ -143,17 +141,5 @@ export default {
     color: red;
     font-weight: bold;
     margin-bottom: 20px;
-}
-/* Transition related */
-.v-enter-from{
-    opacity: 0;
-    transform: translateY(50px);
-}
-.v-enter-active{
-    transition: all 0.5s ease-in-out;
-}
-.v-enter-to{
-    opacity: 1;
-    transform: translateY(0);
 }
 </style>

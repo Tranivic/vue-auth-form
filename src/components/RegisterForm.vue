@@ -1,6 +1,5 @@
 <template>
 <div class="register-container">
-    <transition>
         <form v-if="!this.isLoading" @submit.prevent="handleSubmit">
             <label for="name">Name</label>
             <input type="text" name="name" id="name" placeholder="Nome" v-model.trim="name">
@@ -12,7 +11,6 @@
             <h1>Already has a account? Go the <router-link to="/login">login</router-link> page.</h1>
         </form>
         <loading-spinner v-else></loading-spinner>
-    </transition>
 </div>
 </template>
 
@@ -107,16 +105,5 @@ export default {
 /* Style for hover effect on register button */
 .register-container button[type="submit"]:hover {
     background-color: #3e8e41;
-}
-.v-enter-from {
-    opacity: 0;
-    transform: translateY(50px);
-}
-.v-enter-active {
-    transition: all 0.3s ease-out;
-}
-.v-enter-to{
-    opacity: 1;
-    transform: translateY(0);
 }
 </style>
