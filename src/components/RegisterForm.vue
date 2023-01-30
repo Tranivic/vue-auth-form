@@ -59,7 +59,6 @@ export default {
 </script>
 
 <style>
-/* Style for register container */
 .register-container {
     width: 400px;
     margin: 0 auto;
@@ -68,7 +67,6 @@ export default {
     border-radius: 10px;
 }
 
-/* Style for form labels */
 .register-container label {
     font-size: 18px;
     font-weight: bold;
@@ -76,7 +74,6 @@ export default {
     display: block;
 }
 
-/* Style for form inputs */
 .register-container input[type="text"],
 .register-container input[type="email"],
 .register-container input[type="password"] {
@@ -89,7 +86,6 @@ export default {
     font-size: 16px;
 }
 
-/* Style for register button */
 .register-container button[type="submit"] {
     width: 100%;
     padding: 12px 20px;
@@ -100,6 +96,7 @@ export default {
     cursor: pointer;
     font-size: 18px;
     font-weight: bold;
+    margin-bottom: 1rem;
 }
 
 /* Style for hover effect on register button */

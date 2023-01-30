@@ -41,6 +41,8 @@ li {
     border: solid 1px #000;
     padding: .5rem;
     width: 15rem;
+    cursor: pointer;
+    margin-top: 1rem;
 }
 
 .goals-form {
