@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import LoginForm from '../components/LoginForm.vue';
-import RegisterForm from '../components/RegisterForm.vue';
+import LoginPage from '../components/pages/LoginPage.vue';
+import RegisterPage from '../components/pages/RegisterPage.vue';
 import UserPage from '../components/pages/UserPage.vue';
 import NotFoundPage from '../components/pages/NotFound.vue';
 import store from '../store/index.js';
@@ -10,13 +10,13 @@ const routes = createRouter({
   routes: [
     {
       path: '/login',
-      component: LoginForm,
+      component: LoginPage,
       alias: '/',
       meta: { requiresUnAuth: true },
     },
     {
       path: '/register',
-      component: RegisterForm,
+      component: RegisterPage,
       meta: { requiresUnAuth: true },
     },
     {
