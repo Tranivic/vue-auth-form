@@ -5,7 +5,7 @@
     </div>
     <user-goals></user-goals>
     <div class="btn-container">
-        <button @click="logoutUser">Logout</button>
+        <button class="logout-btn" @click="logoutUser">Logout</button>
     </div>
 </section>
 </template>
@@ -73,7 +73,7 @@ h1 {
     padding-bottom: 3rem;
 }
 
-button {
+.logout-btn {
     background-color: #ff0000;
     color: #ffffff;
     padding: 10px 15px;
@@ -83,7 +83,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.logout-btn:hover {
     background-color: #cc0000;
 }
 </style>

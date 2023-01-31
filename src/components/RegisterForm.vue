@@ -1,22 +1,22 @@
 <template>
 <div class="register-container">
-        <form v-if="!this.isLoading" @submit.prevent="handleSubmit">
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name" placeholder="Nome" v-model.trim="name">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" placeholder="Email" v-model.trim="email">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" placeholder="Senha" v-model.trim="password">
-            <button type="submit">Sing up</button>
-            <h1>Already has a account? Go the <router-link to="/login">login</router-link> page.</h1>
-        </form>
-        <loading-spinner v-else></loading-spinner>
+    <form v-if="!this.isLoading" @submit.prevent="handleSubmit">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" placeholder="Nome" v-model.trim="name">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" placeholder="Email" v-model.trim="email">
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password" placeholder="Senha" v-model.trim="password">
+        <button type="submit">Sing up</button>
+        <h1>Already has a account? Go the <router-link to="/login">login</router-link> page.</h1>
+    </form>
+    <loading-spinner v-else></loading-spinner>
 </div>
 </template>
 
 <script>
 export default {
-    mounted () {
+    mounted() {
         this.isLoading = false;
     },
     data() {
@@ -58,7 +58,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .register-container {
     width: 400px;
     margin: 0 auto;
@@ -74,9 +74,7 @@ export default {
     display: block;
 }
 
-.register-container input[type="text"],
-.register-container input[type="email"],
-.register-container input[type="password"] {
+input {
     width: 100%;
     padding: 12px 20px;
     margin-bottom: 20px;
@@ -86,7 +84,7 @@ export default {
     font-size: 16px;
 }
 
-.register-container button[type="submit"] {
+button {
     width: 100%;
     padding: 12px 20px;
     background-color: #4CAF50;
@@ -99,8 +97,7 @@ export default {
     margin-bottom: 1rem;
 }
 
-/* Style for hover effect on register button */
-.register-container button[type="submit"]:hover {
+button:hover {
     background-color: #3e8e41;
 }
 </style>

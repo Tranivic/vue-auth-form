@@ -3,6 +3,7 @@
     <transition-group tag="ul" name="goals-list">
         <li @click="removeGoal(goal)" v-for="goal in goals" :key="goal">{{ goal }}</li>
     </transition-group>
+    <h1>This is a dummy user page exemple, just for training some transition skills</h1>
     <div class="goals-form">
         <input type="text" v-model="newGoal">
         <button @click="addGoal">Add</button>
@@ -35,14 +36,19 @@ export default {
 }
 </script>
 
-<style lang="css" scoped>
+<style scoped>
+.user-goals{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 li {
     background-color: #ccc;
     border: solid 1px #000;
     padding: .5rem;
     width: 15rem;
     cursor: pointer;
-    margin-top: 1rem;
+    margin-bottom: 2rem;
 }
 
 .goals-form {
@@ -52,6 +58,7 @@ li {
     margin: 2rem 0;
 }
 
+/* Animation related */
 .goals-list-enter-active,
 .goals-list-leave-active {
     transition: all .5s;
