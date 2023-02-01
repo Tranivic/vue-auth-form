@@ -21,7 +21,7 @@ export default {
             isLoading: true,
         };
     },
-     async created() {
+    async created() {
         this.isLoading = true;
         if (!this.getLogedUser) {
             await this.loadUserData();

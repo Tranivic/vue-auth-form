@@ -25,7 +25,7 @@ export default {
   },
   actions: {
     async isTokenValid() {
-      console.log('Checking token validity...')
+      console.log('Checking token validity...');
       if (localStorage.getItem('token')) {
         const tokenExpiration = localStorage.getItem('tokenExpiration') * 100;
         const tokenCreatedTime = localStorage.getItem('authTime');
@@ -33,7 +33,9 @@ export default {
         const tokenDuration = currentTime - tokenCreatedTime;
         const tokenExpiresIn = tokenExpiration - tokenDuration;
 
-        console.log('Token expires in: ' + parseInt(tokenExpiresIn / 1000) + 's');
+        console.log(
+          'Token expires in: ' + parseInt(tokenExpiresIn / 1000) + 's'
+        );
         if (tokenDuration > tokenExpiration) {
           console.log('Token expired');
           return false;
@@ -44,8 +46,9 @@ export default {
       console.log('No token found');
       return false;
     },
+
     async checkAuth(context) {
-      const tokenStillValid =  await context.dispatch('isTokenValid');
+      const tokenStillValid = await context.dispatch('isTokenValid');
       if (tokenStillValid) {
         context.commit('setUserState', {
           id: localStorage.getItem('userId'),
@@ -62,20 +65,22 @@ export default {
         mode: 'login',
       });
     },
+
     async singUp(context, payload) {
       return context.dispatch('auth', {
         ...payload,
         mode: 'singup',
       });
     },
+
     async auth(context, payload) {
+      const API_KEY = process.env.VUE_APP_API_KEY;
+      console.log(API_KEY)
       let defaultErrorMessage = 'Failed to sigup!';
-      let url =
-        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBDNr22n_oyIauuFGR-JyJpKyOl_1eBrTE';
+      let url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${API_KEY}`;
       if (payload.mode === 'login') {
         defaultErrorMessage = 'Failed to login!';
-        url =
-          'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBDNr22n_oyIauuFGR-JyJpKyOl_1eBrTE';
+        url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
       }
       const response = await fetch(url, {
         method: 'POST',

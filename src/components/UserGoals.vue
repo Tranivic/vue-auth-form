@@ -37,11 +37,12 @@ export default {
 </script>
 
 <style scoped>
-.user-goals{
+.user-goals {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
 li {
     background-color: #ccc;
     border: solid 1px #000;

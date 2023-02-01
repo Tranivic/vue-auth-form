@@ -62,6 +62,7 @@ export default {
                 console.log(err)
                 if (err.message === 'EMAIL_EXISTS') {
                     this.formValidity.errorMessage = 'E-mail already registered';
+                    this.email.isValid = false;
                 } else {
                     this.formValidity.errorMessage = err.message || 'Something went wrong, try again later';
                 }
@@ -123,18 +124,18 @@ export default {
 
 <style scoped>
 .register-container {
-    width: 400px;
+    width: min(100%, 400px);
     margin: 0 auto;
     padding: 20px;
     background-color: #f5f5f5;
     border-radius: 10px;
-}
-
-.register-container label {
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 10px;
+}
+
+label {
     display: block;
+    margin-bottom: 5px;
 }
 
 input {

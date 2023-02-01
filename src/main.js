@@ -10,7 +10,6 @@ import LoadingSpinner from './components/ui/LoadingSpinner.vue'
 
 const app = createApp(App)
 app.component('loading-spinner', LoadingSpinner)
-
 app.use(router)
 app.use(store)
 app.mount('#app')

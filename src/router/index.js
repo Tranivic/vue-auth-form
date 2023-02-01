@@ -30,16 +30,17 @@ const routes = createRouter({
 });
 
 routes.beforeEach(async (to, _, next) => {
-    await store.dispatch('auth/checkAuth');
-    if(to.meta.requiresAuth && !store.getters['auth/isAuthenticated']) {
-        next('/login');
-    } else if(to.meta.requiresUnAuth && store.getters['auth/isAuthenticated']) {
-        next('/user/' + store.getters['auth/id']);
-    } else if(to.meta.requiresAuth && to.params.userId !== store.getters['auth/id']) {
-        next('/user/' + store.getters['auth/id']);
-    } else {
-        next();
-    }
+  await store.dispatch('auth/checkAuth');
+  if (!store.getters['auth/isAuthenticated'] && to.meta.requiresAuth) {
+    return next('/login');
+  }
+  if (store.getters['auth/isAuthenticated'] && to.meta.requiresUnAuth) {
+    return next('/user/' + store.getters['auth/id']);
+  }
+  if (to.meta.requiresAuth && to.params.userId !== store.getters['auth/id']) {
+    return next('/user/' + store.getters['auth/id']);
+  }
+  next();
 });
 
 export default routes;

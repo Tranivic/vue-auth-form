@@ -15,5 +15,6 @@ header {
     padding: 1rem;
     text-align: center;
     margin-bottom: 10rem;
+    width: 100%;
 }
 </style>

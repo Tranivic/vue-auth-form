@@ -1,14 +1,12 @@
 <template>
-<div>
-    <the-header></the-header>
-    <main>
-        <router-view v-slot="slotProps">
-            <transition name="route">
-                <component :is="slotProps.Component"></component>
-            </transition>
-        </router-view>
-    </main>
-</div>
+<the-header></the-header>
+<main>
+    <router-view v-slot="slotProps">
+        <transition name="route" mode="out-in">
+            <component :is="slotProps.Component"></component>
+        </transition>
+    </router-view>
+</main>
 </template>
 
 <script>
@@ -21,23 +19,30 @@ export default {
 </script>
 
 <style scoped>
-import main {
+body{
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}
+* {
+    font-family: 'Roboto', sans-serif;
+}
+main {
     display: flex;
     justify-content: center;
     background-color: #f5f5f5;
 }
 
-* {
-    font-family: 'Roboto', sans-serif;
-}
-.route-enter-active{
+.route-enter-active {
     transition: all .5s;
 }
-.route-enter-from{
+
+.route-enter-from {
     opacity: 0;
     transform: translateX(50px);
 }
-.route-enter-to{
+
+.route-enter-to {
     opacity: 1;
     transform: translateX(0);
 }
