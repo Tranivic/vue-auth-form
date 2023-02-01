@@ -7,6 +7,7 @@ This Vue application is a dummy authentication app that uses Vuex, Vue Store, an
 - User registration and login
 - User authentication using Firebase
 - Management of authentication state using Vuex and Vue Store
+- Check for auth token and auto log in/out.
 
 ## Technical Overview 🤖
 
