@@ -1,6 +1,6 @@
-# 🔥 Vue Authentication App 🔒
+# Vue Authentication App 🔒
 
-This Vue application is a dummy authentication app that uses Vuex, 🗃️ Vue Store, and Firebase. The purpose of this app is to help developers improve their Vue authentication skills 
+This Vue application is a dummy authentication app that uses Vuex, Vue Store, and Firebase. The purpose of this app is to help developers improve their Vue authentication skills 
 
 ## Features 📊
 
@@ -27,8 +27,8 @@ This Vue application is a dummy authentication app that uses Vuex, 🗃️ Vue S
 
 ## Website 🌍
 
-- Website Link: [website_link]
+- You can try [here](https://auth-app-vue.netlify.app/)
 
 ## Contact 💬
 
-- LinkedIn: [linkedin_profile_link]
+- [Linkedin](https://www.linkedin.com/in/victor-martins-t/)
