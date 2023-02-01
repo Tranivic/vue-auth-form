@@ -10,8 +10,7 @@
         </p>
         <button type="submit">Login</button>
         <h1>
-            First time in the app? Go to the
-            <router-link to="/register">sing-up</router-link> page
+            First time in the app? Go to the <router-link to="/register">sing-up</router-link> page
         </h1>
     </form>
     <loading-spinner v-else></loading-spinner>
@@ -110,7 +109,7 @@ input {
     font-size: 16px;
 }
 
-.login-container button[type='submit'] {
+.login-container button {
     width: 100%;
     padding: 12px 20px;
     background-color: #4caf50;
@@ -120,7 +119,7 @@ input {
     cursor: pointer;
     font-size: 18px;
     font-weight: bold;
-    margin-bottom: 1rem;
+    margin: 1rem 0;
 }
 
 .login-container button[type='submit']:hover {
@@ -131,7 +130,6 @@ input {
 .error-message {
     color: red;
     font-weight: bold;
-    margin-bottom: 20px;
 }
 
 .input-error {
